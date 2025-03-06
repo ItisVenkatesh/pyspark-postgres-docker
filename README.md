@@ -1,15 +1,15 @@
 # pyspark-postgres-docker
-This repository provides a complete setup for running PostgreSQL in a Docker container using docker-compose and accessing its tables using PySpark via JDBC. It includes a docker-compose.yml file to spin up a PostgreSQL database and a PySpark script to connect, read, and process data from the database.
+This repository provides a complete setup for running PostgreSQL in a Docker container using docker-compose and accessing its tables using PySpark via JDBC. It includes a docker-compose.yml file to spin up a PostgreSQL database with PGAdmin and a PySpark script to connect, read, and process data from the database.
 
 ## 📌 Features:
-	•	PostgreSQL setup using Docker and docker-compose
+	•	PostgreSQL with PGAdmin setup using Docker and docker-compose
 	•	JDBC connection for PySpark
 	•	Example table creation and data retrieval using PySpark
-	•	Steps to install dependencies and configure the setup
+	•	Steps to install and configure the setup
 
 ## 🛠️ Tech Stack
 - **ETL Tools**: PySpark
-- **Database**: Postgres
+- **Database**: Postgres with PGAdmin
 - **Language**: Python
 - **Container**: Docker
 
@@ -31,11 +31,52 @@ This repository provides a complete setup for running PostgreSQL in a Docker con
     ``` bash
     docket-compose up -d
 
-4. Explore the notebook:
-    Open pyspark-postgres-docker.ipynb and try running the cells.
+4. Open PGAdmin:
 
-5. Run docker-compose to stop the containers:
-   - Once done, to stop the containers,
+    Open the link [http://localhost:8080/] (http://localhost:8080/) in any web browser.
+    Login using the username and password mentioned in docker-compose.yml file.
+
+5. Configure server:
+
+    - Right click on servers and click "Register".
+    - Choose "Server...".
+    - Give name as "test_server".
+    - Go to "Connection" tab.
+        - Mention Host Name/address as db
+        - Mention the user name and passwords as in docker-compose.yml
+        - [Optional] Enable "Save password?"
+    - Click "Save" at the bottom.
+
+6. Configure data for notebook testing:
+    - Expand test_user database.
+    - Expand Schemas and then public.
+    - Use the button Query Tool on top.
+    - Execute below queries.
+
+    ```sql
+    CREATE TABLE employees (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    age INT
+    );
+
+    INSERT INTO employees (name, age) VALUES
+    ('Name_A', 30),
+    ('Name_B', 25),
+    ('Name_C', 35);
+
+
+7. Explore the notebook:
+    ``` bash
+    cd notebooks
+    
+    - Open pyspark-postgres-docker.ipynb with any IDE.
+    - In the spark config for postgres jar, replace the value "path/to/notebooks/jars/postgresql-42.7.5.jar" according to your file location. The jar file is provided as part of this Repo.
+    - Try changing and running the cells.
+
+8. Run docker-compose to stop the containers:
+   - Once done, to stop the containers.
+
    ``` bash
    docker-compose down 
 
