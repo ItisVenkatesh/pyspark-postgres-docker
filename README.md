@@ -29,7 +29,7 @@ This repository provides a complete setup for running PostgreSQL in a Docker con
 3. Run docker-compose to start the postgres db container:
 
     ``` bash
-    docket-compose up -d
+    docker-compose up -d
 
 4. Open PGAdmin:
 
